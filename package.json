@@ -1,0 +1,21 @@
+{
+  "name": "duonick-page",
+  "version": "1.0.0",
+  "description": "Plataforma de Agendamento e Publicação de Conteúdos em Massa — Landing Page Editorial",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "agendamento",
+    "publicacao-em-massa",
+    "instagram",
+    "tiktok",
+    "youtube",
+    "shorts",
+    "reels"
+  ],
+  "license": "PRIVATE"
+}
+

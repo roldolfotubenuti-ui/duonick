@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Lime Rounded Square Body -->
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="#63FF18" stroke="#080A0A" stroke-width="3" />
+  <!-- Side Connector Ears -->
+  <rect x="3" y="25" width="7" height="12" rx="3" fill="#080A0A" />
+  <rect x="54" y="25" width="7" height="12" rx="3" fill="#080A0A" />
+  <!-- Cat/Robot Visor Head -->
+  <path d="M16 26 L21 15 L29 21 H35 L43 15 L48 26 V39 C48 42.5 45 45 41.5 45 H22.5 C19 45 16 42.5 16 39 V26 Z" fill="#080A0A" />
+  <!-- Visor Screen -->
+  <rect x="20" y="25" width="24" height="14" rx="5" fill="#FFFFFF" />
+  <!-- Glowing Eyes -->
+  <rect x="24" y="29" width="5.5" height="6.5" rx="2.5" fill="#080A0A" />
+  <rect x="34.5" y="29" width="5.5" height="6.5" rx="2.5" fill="#080A0A" />
+  <circle cx="25.8" cy="31" r="1.2" fill="#63FF18" />
+  <circle cx="36.3" cy="31" r="1.2" fill="#63FF18" />
+  <!-- Little Mouth / Indicator -->
+  <rect x="27" y="49" width="10" height="4" rx="2" fill="#080A0A" />
+</svg>
+
