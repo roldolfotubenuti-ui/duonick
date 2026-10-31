@@ -1,0 +1,5 @@
+# Vercel Deployment Ignore
+server.js
+.git
+.github
+*.log

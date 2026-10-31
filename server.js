@@ -66,4 +66,9 @@ function startServer(port) {
   });
 }
 
-startServer(DEFAULT_PORT);
+// Executa o servidor apenas quando chamado diretamente via CLI em desenvolvimento local
+if (require.main === module && !process.env.VERCEL) {
+  startServer(DEFAULT_PORT);
+}
+
+module.exports = { createAppServer, startServer };
