@@ -222,16 +222,16 @@
 
   // 6. Lógica de Precificação e Seletor do Plano Personalizado
   // Tabela oficial de preços enviada:
-  // Starter (3 contas) -> R$ 99,90 (Economia de R$ 49,80)
-  // Pro (5 contas) -> R$ 159,90 (Economia de R$ 89,60)
-  // Business (10 contas) -> R$ 279,90 (Economia de R$ 219,10)
-  const OFFICIAL_TIERS = [
-    { name: 'Starter', accounts: 3, price: 99.90 },
-    { name: 'Pro', accounts: 5, price: 159.90 },
-    { name: 'Business', accounts: 10, price: 279.90 }
+  // Starter (3 contas) -> R$ 99,90 (https://pay.cakto.com.br/v2j3krs)
+  // Pro (5 contas) -> R$ 159,90 (https://pay.cakto.com.br/dugzksx)
+  // Business (10 contas) -> R$ 279,90 (https://pay.cakto.com.br/3aomaqr)
+  const OFFICIAL_TIERS = (config.pricingTable && config.pricingTable.tiers) || [
+    { name: 'Starter', accounts: 3, price: 99.90, checkoutUrl: 'https://pay.cakto.com.br/v2j3krs' },
+    { name: 'Pro', accounts: 5, price: 159.90, checkoutUrl: 'https://pay.cakto.com.br/dugzksx' },
+    { name: 'Business', accounts: 10, price: 279.90, checkoutUrl: 'https://pay.cakto.com.br/3aomaqr' }
   ];
 
-  const SINGLE_ACCOUNT_REF_PRICE = 49.90; // R$ 49,90 por conta/mês
+  const SINGLE_ACCOUNT_REF_PRICE = (config.pricingTable && config.pricingTable.singleAccountReference) || 49.90; // R$ 49,90 por conta/mês
 
   let currentTierIndex = 0; // Começa em 3 contas (Starter)
 
@@ -249,6 +249,7 @@
     const savingsSimpleEl = document.getElementById('custom-savings-simple');
     const btnMinus = document.getElementById('custom-btn-minus');
     const btnPlus = document.getElementById('custom-btn-plus');
+    const customCtaBtn = document.getElementById('custom-cta-btn');
 
     // Cálculo exato da economia:
     // VALOR INDIVIDUAL = quantidade de contas × R$ 49,90
@@ -280,6 +281,11 @@
       }
     }
 
+    // Atualiza o link de checkout do botão personalizado de acordo com o tier
+    if (customCtaBtn && tier.checkoutUrl) {
+      customCtaBtn.href = tier.checkoutUrl;
+    }
+
     // Gerencia estado de ativação dos botões de - e +
     if (btnMinus) {
       btnMinus.disabled = currentTierIndex === 0;
@@ -288,13 +294,14 @@
       btnPlus.disabled = currentTierIndex === OFFICIAL_TIERS.length - 1;
     }
 
-    // Atualiza o plano personalizado na configuração global para integração do modal
+    // Atualiza o plano personalizado na configuração global
     const planPersonalizado = (config.plans || []).find((p) => p.id === 'personalizado');
     if (planPersonalizado) {
       planPersonalizado.price = `R$ ${formatBRL(tier.price)}`;
       planPersonalizado.accounts = tier.accounts;
       planPersonalizado.tierName = tier.name;
       planPersonalizado.savings = `R$ ${formatBRL(economia)}`;
+      planPersonalizado.checkoutUrl = tier.checkoutUrl;
     }
   }
 
@@ -322,58 +329,24 @@
   // Inicializa o card personalizado imediatamente
   updateCustomCardUI();
 
-  // 7. Ações de Planos, Suporte, Termos e Privacidade
+  // 7. Ações de Planos (Redirecionamento direto ao checkout oficial da Cakto, sem modal)
   document.querySelectorAll('[data-action="select-plan"]').forEach((btn) => {
     btn.addEventListener('click', function (e) {
       const planId = btn.getAttribute('data-plan') || 'pro';
-      const planObj = ((config.plans || []).find((p) => p.id === planId)) || {
-        id: planId,
-        name: planId.toUpperCase(),
-        price: '',
-        period: '/mês',
-        checkoutUrl: ''
-      };
+      let checkoutUrl = '';
 
-      if (planObj.checkoutUrl && planObj.checkoutUrl.trim() !== '') {
-        window.location.href = planObj.checkoutUrl;
-        return;
+      if (planId === 'personalizado') {
+        const tier = OFFICIAL_TIERS[currentTierIndex];
+        checkoutUrl = (tier && tier.checkoutUrl) || btn.getAttribute('href') || 'https://pay.cakto.com.br/v2j3krs';
+      } else {
+        const planObj = ((config.plans || []).find((p) => p.id === planId));
+        checkoutUrl = (planObj && planObj.checkoutUrl) || btn.getAttribute('href');
       }
 
-      e.preventDefault();
-      const currentTier = OFFICIAL_TIERS[currentTierIndex];
-      const accountsLabel = planId === 'basico'
-        ? '1 conta conectada'
-        : planId === 'pro'
-          ? '2 contas conectadas'
-          : `${currentTier.accounts} contas conectadas (${currentTier.name})`;
-
-      const savingsNote = planId === 'personalizado'
-        ? `<div style="background:#F4F7F7;border:1px solid #080A0A;border-radius:8px;padding:8px;margin-bottom:12px;font-size:12.5px;color:#080A0A;font-weight:700;text-align:center;">
-             Economizou ${planObj.savings || 'R$ 49,80'}/mês
-           </div>`
-        : planId === 'pro'
-          ? `<div style="background:#F4F7F7;border:1px solid #080A0A;border-radius:8px;padding:8px;margin-bottom:12px;font-size:12.5px;color:#080A0A;font-weight:700;text-align:center;">
-               Economizou R$ 31,90/mês
-             </div>`
-          : '';
-
-      openModal(`
-        <span class="modal-badge">ASSINATURA · PLANO ${planObj.name}</span>
-        <h3 id="modal-title" class="modal-heading">${planObj.name} — ${planObj.price}${planObj.period}</h3>
-        <p class="modal-text">
-          Configuração selecionada: <strong>${accountsLabel}</strong>.
-        </p>
-        ${savingsNote}
-        <p class="modal-text">
-          Informe seu nome e e-mail para continuar com a contratação:
-        </p>
-        <form class="modal-form" data-plan-form="${planObj.name}">
-          <input type="text" class="modal-input" placeholder="Seu nome completo" required />
-          <input type="email" class="modal-input" placeholder="Seu melhor e-mail" required />
-          <button type="submit" class="modal-submit-btn">CONTINUAR PARA ASSINATURA →</button>
-        </form>
-        <p class="modal-note">Você pode vincular o link direto do seu checkout em <code>config.js</code>.</p>
-      `);
+      if (checkoutUrl && checkoutUrl.startsWith('http')) {
+        btn.href = checkoutUrl;
+        // Navegação direta para a Cakto sem qualquer modal intermediário
+      }
     });
   });
 
