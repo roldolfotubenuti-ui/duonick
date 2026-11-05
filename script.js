@@ -222,13 +222,13 @@
 
   // 6. Lógica de Precificação e Seletor do Plano Personalizado
   // Tabela oficial de preços enviada:
-  // Starter (3 contas) -> R$ 99,90 (https://pay.cakto.com.br/v2j3krs)
-  // Pro (5 contas) -> R$ 159,90 (https://pay.cakto.com.br/dugzksx)
-  // Business (10 contas) -> R$ 279,90 (https://pay.cakto.com.br/3aomaqr)
+  // Starter (3 contas) -> R$ 99,90 (https://pay.cakto.com.br/cgz2ipd)
+  // Pro (5 contas) -> R$ 159,90 (https://pay.cakto.com.br/3acogue)
+  // Business (10 contas) -> R$ 279,90 (https://pay.cakto.com.br/tcn7eaq)
   const OFFICIAL_TIERS = (config.pricingTable && config.pricingTable.tiers) || [
-    { name: 'Starter', accounts: 3, price: 99.90, checkoutUrl: 'https://pay.cakto.com.br/v2j3krs' },
-    { name: 'Pro', accounts: 5, price: 159.90, checkoutUrl: 'https://pay.cakto.com.br/dugzksx' },
-    { name: 'Business', accounts: 10, price: 279.90, checkoutUrl: 'https://pay.cakto.com.br/3aomaqr' }
+    { name: 'Starter', accounts: 3, price: 99.90, checkoutUrl: 'https://pay.cakto.com.br/cgz2ipd' },
+    { name: 'Pro', accounts: 5, price: 159.90, checkoutUrl: 'https://pay.cakto.com.br/3acogue' },
+    { name: 'Business', accounts: 10, price: 279.90, checkoutUrl: 'https://pay.cakto.com.br/tcn7eaq' }
   ];
 
   const SINGLE_ACCOUNT_REF_PRICE = (config.pricingTable && config.pricingTable.singleAccountReference) || 49.90; // R$ 49,90 por conta/mês
@@ -337,7 +337,7 @@
 
       if (planId === 'personalizado') {
         const tier = OFFICIAL_TIERS[currentTierIndex];
-        checkoutUrl = (tier && tier.checkoutUrl) || btn.getAttribute('href') || 'https://pay.cakto.com.br/v2j3krs';
+        checkoutUrl = (tier && tier.checkoutUrl) || btn.getAttribute('href') || 'https://pay.cakto.com.br/cgz2ipd';
       } else {
         const planObj = ((config.plans || []).find((p) => p.id === planId));
         checkoutUrl = (planObj && planObj.checkoutUrl) || btn.getAttribute('href');

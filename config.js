@@ -95,7 +95,7 @@ window.PLATFORM_CONFIG = {
       period: '/mês',
       featured: false,
       badge: '',
-      checkoutUrl: 'https://pay.cakto.com.br/bm78f2u',
+      checkoutUrl: 'https://pay.cakto.com.br/j9xce8y_1285200',
       features: [
         '1 conta conectada',
         'Até 100 publicações/mês',
@@ -113,7 +113,7 @@ window.PLATFORM_CONFIG = {
       period: '/mês',
       featured: true,
       badge: 'MAIS ESCOLHIDO',
-      checkoutUrl: 'https://pay.cakto.com.br/oztismn_1275565',
+      checkoutUrl: 'https://pay.cakto.com.br/39ctnwv',
       features: [
         '2 contas conectadas',
         'Publicações em massa',
@@ -133,7 +133,7 @@ window.PLATFORM_CONFIG = {
       tierName: 'Starter',
       featured: false,
       badge: '',
-      checkoutUrl: 'https://pay.cakto.com.br/v2j3krs',
+      checkoutUrl: 'https://pay.cakto.com.br/cgz2ipd',
       ctaLabel: 'COMEÇAR AGORA →'
     }
   ],
@@ -143,9 +143,9 @@ window.PLATFORM_CONFIG = {
   pricingTable: {
     singleAccountReference: 49.90,
     tiers: [
-      { name: 'Starter', accounts: 3, price: 99.90, checkoutUrl: 'https://pay.cakto.com.br/v2j3krs' },
-      { name: 'Pro', accounts: 5, price: 159.90, checkoutUrl: 'https://pay.cakto.com.br/dugzksx' },
-      { name: 'Business', accounts: 10, price: 279.90, checkoutUrl: 'https://pay.cakto.com.br/3aomaqr' }
+      { name: 'Starter', accounts: 3, price: 99.90, checkoutUrl: 'https://pay.cakto.com.br/cgz2ipd' },
+      { name: 'Pro', accounts: 5, price: 159.90, checkoutUrl: 'https://pay.cakto.com.br/3acogue' },
+      { name: 'Business', accounts: 10, price: 279.90, checkoutUrl: 'https://pay.cakto.com.br/tcn7eaq' }
     ]
   }
 };
